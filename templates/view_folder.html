@@ -1,0 +1,86 @@
+{% extends "home.html" %}
+
+{% block content %}
+<h2>Folder: {{ folder.name }}</h2>
+
+
+<h3>Створити підпапку</h3>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <div class="form-group">
+        {{ form.folder_name.label }}
+        {{ form.folder_name(class="form-control") }}
+    </div>
+    <div class="form-group">
+        {{ form.submit(class="btn btn-primary") }}
+    </div>
+</form>
+
+
+<h3>Завантажити фото</h3>
+<form method="POST" enctype="multipart/form-data">
+    {{ upload_form.hidden_tag() }}
+    <div class="form-group">
+        {{ upload_form.photo.label }}
+        {{ upload_form.photo(class="form-control") }}
+    </div>
+    <div class="form-group">
+        {{ upload_form.submit(class="btn btn-primary") }}
+    </div>
+</form>
+
+
+<h3>Підпапки</h3>
+<ul>
+    {% for subfolder in subfolders %}
+        <li><a href="{{ url_for('view_folder', folder_id=subfolder.id) }}">{{ subfolder.name }}</a></li>
+    {% else %}
+        <li>No subfolders yet.</li>
+    {% endfor %}
+</ul>
+
+
+<h3>Фото</h3>
+<ul>
+    {% for photo in photos %}
+        <li>
+            <img src="{{ photo.filepath }}" alt="{{ photo.filename }}" width="100" style="cursor:pointer;"
+                 onclick="showImage('{{ photo.filepath }}')">
+        </li>
+    {% else %}
+        <li>No photos in this folder.</li>
+    {% endfor %}
+</ul>
+
+>
+<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Photo Viewer</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="modalImage" src="" alt="Photo" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block scripts %}
+<script>
+    function showImage(imageUrl) {
+        document.getElementById("modalImage").src = imageUrl; 
+        $('#imageModal').modal('show'); 
+    }
+</script>
+{% endblock %}
+
+
+<form action="{{ url_for('delete_folder', folder_id=folder.id) }}" method="POST">
+    <button type="submit" class="btn btn-danger">Видалити папку</button>
+</form>
+
+{% endblock %}

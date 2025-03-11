@@ -1,0 +1,27 @@
+{% extends "Home.html" %}
+
+{% block content %}
+    <h2>Ласкаво просимо до вашого профілю, {{ current_user.username }}!</h2>
+
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.folder_name.label }}
+            {{ form.folder_name(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+    </form>
+
+    <h3>Ваші папки</h3>
+    <ul>
+        {% for folder in folders %}
+            <li><a href="{{ url_for('view_folder', folder_id=folder.id) }}">{{ folder.name }}</a></li>
+        {% else %}
+            <li>Папок ще немає.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "home.html" %}
+
+{% block content %}
+    <h2>Upload Photo to {{ folder.name }}</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}  <!-- Для CSRF -->
+        <div class="form-group">
+            {{ form.photo.label }}
+            {{ form.photo(class="form-control") }}
+        </div>
+        <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+{% endblock %}

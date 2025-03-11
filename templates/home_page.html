@@ -1,0 +1,11 @@
+{% extends 'home.html' %}
+
+{% block content %}
+<div class="jumbotron">
+    <h1 class="display-4">Ласкаво просимо до сайту Фотоальбому</h1>
+    <p class="lead">Цей сайт дозволяє користувачам ефективно керувати своїми фотографіями та папками. Ви можете створювати папки, завантажувати фотографії та впорядковувати їх у безпечному хмарному сховищі (Amazon S3)</p>
+    <hr class="my-4">
+    <p>Наш сервер працює на Flask, SQLAlchemy та AWS S3 для зберігання файлів.</p>
+    <a class="btn btn-primary btn-lg" href="{{ url_for('login') }}" role="button">Увійдіть, щоб розпочати</a>
+</div>
+{% endblock %}
